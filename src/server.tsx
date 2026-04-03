@@ -29,6 +29,7 @@ const pick = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)]!;
 const routes = route({
 	index: "/",
 	activity: "/frame/activity",
+	activityEvents: "/events/activity",
 });
 
 const router = createRouter({
@@ -37,7 +38,7 @@ const router = createRouter({
 
 router.get(routes.index, (req) => {
 	const stream = renderToStream(<App />, {
-		frameSrc: new URL(req.url).pathname,
+		frameSrc: req.url.pathname,
 		resolveFrame: async (src) => {
 			const res = await fetch(`http://localhost:${PORT}${src}`);
 			return res.body!;
@@ -60,6 +61,31 @@ router.get(routes.activity, () => {
 
 	return new Response(stream, {
 		headers: { "Content-Type": "text/html" },
+	});
+});
+
+router.get(routes.activityEvents, (req) => {
+	const encoder = new TextEncoder();
+
+	const stream = new ReadableStream({
+		start(controller) {
+			const interval = setInterval(() => {
+				controller.enqueue(encoder.encode("data: {\"hello\": \"world\"}\n\n"));
+			}, 4000);
+
+			req.request.signal.addEventListener("abort", () => {
+				clearInterval(interval);
+				controller.close();
+			});
+		},
+	});
+
+	return new Response(stream, {
+		headers: {
+			"Content-Type": "text/event-stream",
+			"Cache-Control": "no-cache",
+			"Connection": "keep-alive",
+		},
 	});
 });
 

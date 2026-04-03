@@ -1,11 +1,12 @@
-import { clientEntry, css, on, type Handle, type Renderable } from "remix/component";
+import { clientEntry, css, on, addEventListeners, type Handle, type Renderable } from "remix/component";
 
 export const ActivityPanel = clientEntry(
 	"/src/components/ActivityPanel.tsx#ActivityPanel",
 	function ActivityPanel(handle: Handle) {
 		let reloading = false;
 
-		const reload = async () => {
+		const reload = async (event: MessageEvent) => {
+			console.log(JSON.parse(event.data));
 			if (reloading) return;
 			reloading = true;
 			handle.update();
@@ -15,6 +16,13 @@ export const ActivityPanel = clientEntry(
 			reloading = false;
 			handle.update();
 		};
+
+		if (typeof EventSource !== "undefined") {
+			const events = new EventSource("/events/activity");
+			addEventListeners(events, handle.signal, {
+				message: reload,
+			});
+		}
 
 		return (props: { children?: Renderable }) => (
 			<section
