@@ -1,7 +1,6 @@
 import type { RequestContext } from 'remix/fetch-router';
-
-import { type PipelineType, jobStore } from '../../jobs/store.ts';
 import { runJob } from '../../jobs/runner.ts';
+import { jobStore, type PipelineType } from '../../jobs/store.ts';
 
 const VALID_PIPELINES: PipelineType[] = [
 	'frontend',
@@ -10,7 +9,7 @@ const VALID_PIPELINES: PipelineType[] = [
 	'lint',
 ];
 
-export async function createJob(req: RequestContext) {
+export const createJob = async (req: RequestContext) => {
 	let pipeline: PipelineType = 'frontend';
 
 	try {
@@ -30,4 +29,4 @@ export async function createJob(req: RequestContext) {
 	return new Response(JSON.stringify({ id: job.id }), {
 		headers: { 'Content-Type': 'application/json' },
 	});
-}
+};

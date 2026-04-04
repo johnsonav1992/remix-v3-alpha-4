@@ -12,7 +12,7 @@ import { getJobList } from './controllers/jobs/getJobList.tsx';
 import { getJobStream } from './controllers/jobs/getJobStream.ts';
 import { routes } from './routes.ts';
 
-export function createAppRouter() {
+export const createAppRouter = () => {
 	const router = createRouter({
 		middleware: [
 			logger(),
@@ -37,4 +37,4 @@ export function createAppRouter() {
 	router.get(routes.activity.stream, getActivityStream);
 
 	return router;
-}
+};

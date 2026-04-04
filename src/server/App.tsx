@@ -3,7 +3,7 @@ import { css, Frame, type Handle } from 'remix/component';
 import ActivityPanel from '../client/components/ActivityPanel.tsx';
 import RunButton from '../client/components/RunButton.tsx';
 
-export function App(_handle: Handle, selectedJobId?: string) {
+export const App = (_handle: Handle, selectedJobId?: string) => {
 	return () => (
 		<html lang="en">
 			<head>
@@ -150,4 +150,4 @@ export function App(_handle: Handle, selectedJobId?: string) {
 			</body>
 		</html>
 	);
-}
+};

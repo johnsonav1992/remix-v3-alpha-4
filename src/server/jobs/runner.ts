@@ -126,8 +126,16 @@ const PIPELINES: Record<PipelineType, readonly Step[]> = {
 			lines: [
 				[1200, 'info', 'Running test suite...'],
 				[2200, 'info', '  ✓ AuthService › login › accepts valid token (112ms)'],
-				[1800, 'info', '  ✓ AuthService › login › rejects expired token (88ms)'],
-				[2400, 'info', '  ✓ UserService › createUser › hashes password (218ms)'],
+				[
+					1800,
+					'info',
+					'  ✓ AuthService › login › rejects expired token (88ms)',
+				],
+				[
+					2400,
+					'info',
+					'  ✓ UserService › createUser › hashes password (218ms)',
+				],
 				[
 					2000,
 					'info',
@@ -136,7 +144,11 @@ const PIPELINES: Record<PipelineType, readonly Step[]> = {
 			],
 			failChance: 0.3,
 			failLines: [
-				[2400, 'error', '  ✗ AuthService › login › should reject invalid token'],
+				[
+					2400,
+					'error',
+					'  ✗ AuthService › login › should reject invalid token',
+				],
 				[400, 'error', '    AssertionError: expected 401 to equal 200'],
 				[400, 'error', '      - Expected: 200'],
 				[400, 'error', '      + Received: 401'],
@@ -211,7 +223,11 @@ const PIPELINES: Record<PipelineType, readonly Step[]> = {
 					'info',
 					'  ✓ src/client/components/RunButton.test.ts (4 tests) 122ms',
 				],
-				[2200, 'info', '  ✓ src/server/controllers/jobs.test.ts (8 tests) 145ms'],
+				[
+					2200,
+					'info',
+					'  ✓ src/server/controllers/jobs.test.ts (8 tests) 145ms',
+				],
 			],
 			failChance: 0.2,
 			failLines: [
@@ -241,7 +257,7 @@ const PIPELINES: Record<PipelineType, readonly Step[]> = {
 	],
 };
 
-export async function runJob(id: string) {
+export const runJob = async (id: string) => {
 	await jobStore.acquireSlot();
 
 	jobStore.setStatus(id, 'running');
@@ -292,4 +308,4 @@ export async function runJob(id: string) {
 	} finally {
 		jobStore.releaseSlot();
 	}
-}
+};

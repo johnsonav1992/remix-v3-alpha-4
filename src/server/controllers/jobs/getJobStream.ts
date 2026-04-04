@@ -3,7 +3,7 @@ import type { RequestContext } from 'remix/fetch-router';
 import type { LogLine } from '../../jobs/store.ts';
 import { jobStore } from '../../jobs/store.ts';
 
-export function getJobStream(req: RequestContext<{ id: string }>) {
+export const getJobStream = (req: RequestContext<{ id: string }>) => {
 	const { id } = req.params;
 	const job = jobStore.get(id);
 
@@ -68,4 +68,4 @@ export function getJobStream(req: RequestContext<{ id: string }>) {
 			Connection: 'keep-alive',
 		},
 	});
-}
+};

@@ -4,7 +4,7 @@ import type { RequestContext } from 'remix/fetch-router';
 import { JobListView } from '../../components/JobListView.tsx';
 import { jobStore } from '../../jobs/store.ts';
 
-export function getJobList(req: RequestContext) {
+export const getJobList = (req: RequestContext) => {
 	const selectedId = req.url.searchParams.get('job');
 	const jobs = jobStore.all();
 
@@ -16,4 +16,4 @@ export function getJobList(req: RequestContext) {
 	);
 
 	return new Response(stream, { headers: { 'Content-Type': 'text/html' } });
-}
+};

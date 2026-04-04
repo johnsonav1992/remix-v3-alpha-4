@@ -2,7 +2,7 @@ import type { RequestContext } from 'remix/fetch-router';
 
 import { jobStore } from '../../jobs/store.ts';
 
-export function getActivityStream(req: RequestContext) {
+export const getActivityStream = (req: RequestContext) => {
 	const encoder = new TextEncoder();
 
 	const stream = new ReadableStream({
@@ -34,4 +34,4 @@ export function getActivityStream(req: RequestContext) {
 			Connection: 'keep-alive',
 		},
 	});
-}
+};

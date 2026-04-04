@@ -1,5 +1,5 @@
 import LogViewer from '../../client/components/LogViewer.tsx';
-import { type Job, type JobStatus } from '../jobs/store.ts';
+import type { Job, JobStatus } from '../jobs/store.ts';
 
 const STATUS_COLOR: Record<JobStatus, string> = {
 	queued: '#888',
@@ -17,7 +17,7 @@ const STATUS_LABEL: Record<JobStatus, string> = {
 	cancelled: '⊘  Cancelled',
 };
 
-export function JobDetailView() {
+export const JobDetailView = () => {
 	return ({ job }: { job: Job }) => (
 		<div
 			style={{
@@ -53,4 +53,4 @@ export function JobDetailView() {
 			<LogViewer setup={job.id} />
 		</div>
 	);
-}
+};

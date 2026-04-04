@@ -6,7 +6,7 @@ import {
 	type SerializableValue,
 } from 'remix/component';
 
-export function clientComponent<
+export const clientComponent = <
 	context = Record<string, never>,
 	setup extends SerializableValue = undefined,
 	props extends SerializableProps = SerializableProps,
@@ -15,6 +15,6 @@ export function clientComponent<
 		handle: Handle<context>,
 		setup: setup,
 	) => (props: props) => RemixNode,
-) {
+) => {
 	return clientEntry<context, setup, props>('/assets/entry.js', component);
-}
+};

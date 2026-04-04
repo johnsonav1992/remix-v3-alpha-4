@@ -1,7 +1,7 @@
-import { type Job } from '../jobs/store.ts';
+import type { Job } from '../jobs/store.ts';
 import { JobRow } from './JobRow.tsx';
 
-export function JobListView() {
+export const JobListView = () => {
 	return ({ jobs, selectedId }: { jobs: Job[]; selectedId: string | null }) => (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
 			{jobs.length === 0 ? (
@@ -24,4 +24,4 @@ export function JobListView() {
 			)}
 		</div>
 	);
-}
+};

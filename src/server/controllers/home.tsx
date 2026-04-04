@@ -3,7 +3,7 @@ import type { RequestContext } from 'remix/fetch-router';
 
 import { App } from '../App.tsx';
 
-export function home(req: RequestContext) {
+export const home = (req: RequestContext) => {
 	const selectedJobId = req.url.searchParams.get('job') ?? undefined;
 
 	const stream = renderToStream(<App setup={selectedJobId} />, {
@@ -18,4 +18,4 @@ export function home(req: RequestContext) {
 	});
 
 	return new Response(stream, { headers: { 'Content-Type': 'text/html' } });
-}
+};

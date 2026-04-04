@@ -18,7 +18,7 @@ const STATUS_COLOR: Record<JobStatus, string> = {
 
 const TIME_FMT = new Intl.DateTimeFormat('en', { timeStyle: 'short' });
 
-export function ActivityFeedView() {
+export const ActivityFeedView = () => {
 	return ({ jobs }: { jobs: Job[] }) => (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
 			{jobs.length === 0 ? (
@@ -76,4 +76,4 @@ export function ActivityFeedView() {
 			)}
 		</div>
 	);
-}
+};
