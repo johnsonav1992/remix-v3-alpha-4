@@ -32,6 +32,13 @@ export function getJobStream(req: RequestContext<{ id: string }>) {
 			const onLog = (line: LogLine) => controller.enqueue(send(line));
 
 			const onDone = (status: string) => {
+				if (
+					status !== 'success' &&
+					status !== 'failed' &&
+					status !== 'cancelled'
+				)
+					return;
+
 				controller.enqueue(send({ done: true, status }));
 				controller.close();
 				cleanup();

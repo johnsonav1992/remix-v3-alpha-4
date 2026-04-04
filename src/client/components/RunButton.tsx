@@ -11,9 +11,19 @@ const PIPELINES: { value: PipelineType; label: string }[] = [
 	{ value: 'lint', label: 'Lint' },
 ];
 
+const SESSION_KEY = 'lastPipeline';
+
 const RunButton = (handle: Handle) => {
 	let loading = false;
 	let selectEl: HTMLSelectElement | null = null;
+
+	const saved =
+		typeof sessionStorage !== 'undefined'
+			? (sessionStorage.getItem(SESSION_KEY) as PipelineType | null)
+			: null;
+
+	const defaultPipeline: PipelineType =
+		saved && PIPELINES.some((p) => p.value === saved) ? saved : 'frontend';
 
 	const run = async () => {
 		if (loading) return;
@@ -21,7 +31,11 @@ const RunButton = (handle: Handle) => {
 		loading = true;
 		handle.update();
 
-		const pipeline = selectEl?.value ?? 'frontend';
+		const pipeline = (selectEl?.value ?? defaultPipeline) as PipelineType;
+
+		if (typeof sessionStorage !== 'undefined') {
+			sessionStorage.setItem(SESSION_KEY, pipeline);
+		}
 
 		const res = await fetch('/jobs', {
 			method: 'POST',
@@ -58,7 +72,12 @@ const RunButton = (handle: Handle) => {
 				disabled={loading}
 			>
 				{PIPELINES.map(({ value, label }) => (
-					<option value={value}>{label}</option>
+					<option
+						value={value}
+						selected={value === defaultPipeline}
+					>
+						{label}
+					</option>
 				))}
 			</select>
 
@@ -73,7 +92,9 @@ const RunButton = (handle: Handle) => {
 						borderRadius: '6px',
 						fontSize: '0.75rem',
 						cursor: loading ? 'not-allowed' : 'pointer',
-						':hover': loading ? {} : { background: '#222', borderColor: '#444' },
+						':hover': loading
+							? {}
+							: { background: '#222', borderColor: '#444' },
 					}),
 					on('click', run),
 				]}
