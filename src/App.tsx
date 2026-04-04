@@ -1,6 +1,6 @@
 import { css, Frame, type Handle } from 'remix/component';
-import { ActivityPanel } from './components/ActivityPanel.tsx';
-import { Counter } from './components/Counter.tsx';
+import ActivityPanel from './components/ActivityPanel.tsx';
+import Counter from './components/Counter.tsx';
 
 export function App(_handle: Handle) {
 	return () => (
