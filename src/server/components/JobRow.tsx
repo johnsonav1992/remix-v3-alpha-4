@@ -23,8 +23,13 @@ const PIPELINE_COLOR: Record<PipelineType, string> = {
 	lint: '#fbbf24',
 };
 
+type JobRowProps = {
+	job: Job;
+	selected: boolean;
+};
+
 export const JobRow = () => {
-	return ({ job, selected }: { job: Job; selected: boolean }) => {
+	return ({ job, selected }: JobRowProps) => {
 		const elapsed =
 			job.finishedAt && job.startedAt
 				? `${((job.finishedAt - job.startedAt) / 1000).toFixed(1)}s`

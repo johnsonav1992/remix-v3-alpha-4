@@ -17,8 +17,12 @@ const STATUS_LABEL: Record<JobStatus, string> = {
 	cancelled: '⊘  Cancelled',
 };
 
+type JobDetailViewProps = {
+	job: Job;
+};
+
 export const JobDetailView = () => {
-	return ({ job }: { job: Job }) => (
+	return ({ job }: JobDetailViewProps) => (
 		<div
 			style={{
 				display: 'flex',

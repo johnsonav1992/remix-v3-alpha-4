@@ -1,8 +1,13 @@
 import type { Job } from '../jobs/store.ts';
 import { JobRow } from './JobRow.tsx';
 
+type JobListViewProps = {
+	jobs: Job[];
+	selectedId: string | null;
+};
+
 export const JobListView = () => {
-	return ({ jobs, selectedId }: { jobs: Job[]; selectedId: string | null }) => (
+	return ({ jobs, selectedId }: JobListViewProps) => (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
 			{jobs.length === 0 ? (
 				<span

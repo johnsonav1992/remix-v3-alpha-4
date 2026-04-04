@@ -18,8 +18,12 @@ const STATUS_COLOR: Record<JobStatus, string> = {
 
 const TIME_FMT = new Intl.DateTimeFormat('en', { timeStyle: 'short' });
 
+type ActivityFeedViewProps = {
+	jobs: Job[];
+};
+
 export const ActivityFeedView = () => {
-	return ({ jobs }: { jobs: Job[] }) => (
+	return ({ jobs }: ActivityFeedViewProps) => (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
 			{jobs.length === 0 ? (
 				<span style={{ fontSize: '0.75rem', color: '#444' }}>
