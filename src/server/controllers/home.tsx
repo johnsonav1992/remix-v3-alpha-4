@@ -2,7 +2,9 @@ import { renderToStream } from 'remix/component/server';
 import { App } from '../App.tsx';
 
 export function home(req: { url: URL }) {
-	const stream = renderToStream(<App />, {
+	const selectedJobId = req.url.searchParams.get('job') ?? undefined;
+
+	const stream = renderToStream(<App setup={selectedJobId} />, {
 		frameSrc: req.url.pathname,
 		resolveFrame: async (src) => {
 			const port = process.env.PORT ?? '3000';
@@ -13,7 +15,5 @@ export function home(req: { url: URL }) {
 		},
 	});
 
-	return new Response(stream, {
-		headers: { 'Content-Type': 'text/html' },
-	});
+	return new Response(stream, { headers: { 'Content-Type': 'text/html' } });
 }

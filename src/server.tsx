@@ -1,6 +1,6 @@
 import * as http from 'node:http';
 import { createRequestListener } from 'remix/node-fetch-server';
-import { createAppRouter } from './router.ts';
+import { createAppRouter } from './server/router.ts';
 
 const PORT = Number(process.env.PORT ?? 3000);
 

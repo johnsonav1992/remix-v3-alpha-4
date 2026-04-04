@@ -4,9 +4,9 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "concurrently -n server,browser -c magenta,cyan \"NODE_ENV=development tsx watch src/server.ts\" \"npm run build:client -- --watch\"",
+		"dev": "concurrently -n server,browser -c magenta,cyan \"NODE_ENV=development tsx watch src/server.tsx\" \"npm run build:client -- --watch\"",
 		"build": "tsc --noEmit && npm run build:client -- --minify",
-		"build:client": "esbuild src/entry.tsx --outdir=public/assets --bundle --format=esm --sourcemap",
+		"build:client": "esbuild src/client/entry.tsx --outdir=public/assets --bundle --format=esm --sourcemap",
 		"lint": "biome check .",
 		"lint:fix": "biome check --write .",
 		"format": "biome format --write ."
