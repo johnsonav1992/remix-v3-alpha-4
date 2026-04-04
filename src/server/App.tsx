@@ -1,5 +1,8 @@
 import { css, Frame, type Handle } from 'remix/component';
 
+import ActivityPanel from '../client/components/ActivityPanel.tsx';
+import RunButton from '../client/components/RunButton.tsx';
+
 export function App(_handle: Handle, selectedJobId?: string) {
 	return () => (
 		<html lang="en">
@@ -59,34 +62,23 @@ export function App(_handle: Handle, selectedJobId?: string) {
 							>
 								Builds
 							</span>
-							<form
-								method="post"
-								action="/jobs"
-							>
-								<button
-									type="submit"
-									mix={[
-										css({
-											padding: '0.3rem 0.75rem',
-											background: '#1a1a1a',
-											color: '#efefef',
-											border: '1px solid #333',
-											borderRadius: '6px',
-											fontSize: '0.75rem',
-											cursor: 'pointer',
-											':hover': { background: '#222', borderColor: '#444' },
-										}),
-									]}
-								>
-									+ Run
-								</button>
-							</form>
+
+							<RunButton />
 						</div>
 
-						<div mix={[css({ flex: 1, overflowY: 'auto', padding: '0.5rem' })]}>
+						<div
+							mix={[
+								css({
+									flex: 1,
+									overflowY: 'auto',
+									padding: '0.5rem',
+									minHeight: 0,
+								}),
+							]}
+						>
 							<Frame
 								name="job-list"
-								src={`/frame/jobs${selectedJobId ? `?job=${selectedJobId}` : ''}`}
+								src={`/jobs${selectedJobId ? `?job=${selectedJobId}` : ''}`}
 								fallback={
 									<span
 										mix={[
@@ -95,6 +87,52 @@ export function App(_handle: Handle, selectedJobId?: string) {
 												color: '#444',
 												padding: '0.5rem 0.75rem',
 												display: 'block',
+											}),
+										]}
+									>
+										Loading…
+									</span>
+								}
+							/>
+						</div>
+
+						<div
+							mix={[
+								css({
+									borderTop: '1px solid #1e1e1e',
+									padding: '0.75rem 0.5rem',
+								}),
+							]}
+						>
+							<span
+								mix={[
+									css({
+										fontSize: '0.65rem',
+										fontWeight: 600,
+										color: '#444',
+										textTransform: 'uppercase',
+										letterSpacing: '0.1em',
+										display: 'block',
+										padding: '0 0.25rem',
+										marginBottom: '0.4rem',
+									}),
+								]}
+							>
+								Activity
+							</span>
+
+							<ActivityPanel />
+
+							<Frame
+								name="activity-feed"
+								src="/activity"
+								fallback={
+									<span
+										mix={[
+											css({
+												fontSize: '0.75rem',
+												color: '#444',
+												padding: '0.25rem',
 											}),
 										]}
 									>
@@ -121,7 +159,7 @@ export function App(_handle: Handle, selectedJobId?: string) {
 							>
 								<Frame
 									name={`job-${selectedJobId}`}
-									src={`/frame/jobs/${selectedJobId}`}
+									src={`/jobs/${selectedJobId}`}
 									fallback={
 										<span mix={[css({ fontSize: '0.8rem', color: '#444' })]}>
 											Loading…

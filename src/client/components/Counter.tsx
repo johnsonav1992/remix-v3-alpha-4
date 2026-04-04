@@ -1,5 +1,5 @@
 import { css, type Handle, on } from 'remix/component';
-import { clientComponent } from '../client.ts';
+import { clientComponent } from '../clientComponent.ts';
 
 const Counter = (handle: Handle) => {
 	let count = 0;

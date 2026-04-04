@@ -1,7 +1,9 @@
-import type { LogLine } from '../jobs/store.ts';
-import { jobStore } from '../jobs/store.ts';
+import type { RequestContext } from 'remix/fetch-router';
 
-export function jobStream(req: { params: { id: string }; request: Request }) {
+import type { LogLine } from '../../jobs/store.ts';
+import { jobStore } from '../../jobs/store.ts';
+
+export function getJobStream(req: RequestContext<{ id: string }>) {
 	const { id } = req.params;
 	const job = jobStore.get(id);
 
@@ -13,19 +15,22 @@ export function jobStream(req: { params: { id: string }; request: Request }) {
 
 	const stream = new ReadableStream({
 		start(controller) {
-			// Replay existing log lines
 			for (const line of job.logs) {
 				controller.enqueue(send(line));
 			}
 
-			// Already finished — close immediately
-			if (job.status === 'success' || job.status === 'failed') {
+			if (
+				job.status === 'success' ||
+				job.status === 'failed' ||
+				job.status === 'cancelled'
+			) {
 				controller.enqueue(send({ done: true, status: job.status }));
 				controller.close();
 				return;
 			}
 
 			const onLog = (line: LogLine) => controller.enqueue(send(line));
+
 			const onDone = (status: string) => {
 				controller.enqueue(send({ done: true, status }));
 				controller.close();

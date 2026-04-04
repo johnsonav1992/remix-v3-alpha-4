@@ -14,3 +14,4 @@ run({
 export { default as ActivityPanel } from './components/ActivityPanel.tsx';
 export { default as Counter } from './components/Counter.tsx';
 export { default as LogViewer } from './components/LogViewer.tsx';
+export { default as RunButton } from './components/RunButton.tsx';

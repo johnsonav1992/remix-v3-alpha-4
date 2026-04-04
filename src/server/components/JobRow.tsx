@@ -1,11 +1,11 @@
-import { renderToStream } from 'remix/component/server';
-import { type Job, type JobStatus, jobStore } from '../../jobs/store.ts';
+import type { Job, JobStatus } from '../jobs/store.ts';
 
 const STATUS_COLOR: Record<JobStatus, string> = {
 	queued: '#888',
 	running: '#60a5fa',
 	success: '#4ade80',
 	failed: '#f87171',
+	cancelled: '#555',
 };
 
 const STATUS_LABEL: Record<JobStatus, string> = {
@@ -13,9 +13,10 @@ const STATUS_LABEL: Record<JobStatus, string> = {
 	running: '●  running',
 	success: '✓  success',
 	failed: '✗  failed',
+	cancelled: '⊘  cancelled',
 };
 
-function JobRow() {
+export const JobRow = () => {
 	return ({ job, selected }: { job: Job; selected: boolean }) => {
 		const elapsed =
 			job.finishedAt && job.startedAt
@@ -67,34 +68,4 @@ function JobRow() {
 			</a>
 		);
 	};
-}
-
-export function frameJobs(req: { url: URL }) {
-	const selectedId = req.url.searchParams.get('job');
-	const all = jobStore.all();
-
-	const stream = renderToStream(
-		<div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
-			{all.length === 0 ? (
-				<span
-					style={{
-						fontSize: '0.8rem',
-						color: '#555',
-						padding: '0.5rem 0.75rem',
-					}}
-				>
-					No builds yet
-				</span>
-			) : (
-				all.map((job) => (
-					<JobRow
-						job={job}
-						selected={job.id === selectedId}
-					/>
-				))
-			)}
-		</div>,
-	);
-
-	return new Response(stream, { headers: { 'Content-Type': 'text/html' } });
-}
+};

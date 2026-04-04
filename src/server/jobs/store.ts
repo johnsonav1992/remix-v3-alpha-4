@@ -8,7 +8,12 @@ export type LogLine = {
 	level: LogLevel;
 };
 
-export type JobStatus = 'queued' | 'running' | 'success' | 'failed';
+export type JobStatus =
+	| 'queued'
+	| 'running'
+	| 'success'
+	| 'failed'
+	| 'cancelled';
 
 export type Job = {
 	id: string;
@@ -50,12 +55,23 @@ class JobStore extends EventEmitter {
 	setStatus(id: string, status: JobStatus) {
 		const job = this.jobs.get(id);
 		if (!job) return;
+
 		job.status = status;
+
 		if (status === 'running') job.startedAt = Date.now();
-		if (status === 'success' || status === 'failed')
+		if (status === 'success' || status === 'failed' || status === 'cancelled')
 			job.finishedAt = Date.now();
+
 		this.emit(`done:${id}`, status);
 		this.emit('updated');
+	}
+
+	cancel(id: string): boolean {
+		const job = this.jobs.get(id);
+		if (!job || job.status !== 'running') return false;
+
+		this.setStatus(id, 'cancelled');
+		return true;
 	}
 }
 

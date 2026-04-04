@@ -1,7 +1,7 @@
 import { jobStore } from './store.ts';
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
-const jitter = (base: number, spread = 0.2) =>
+const jitter = (base: number, spread = 0.4) =>
 	Math.round(base * (1 - spread / 2 + Math.random() * spread));
 
 const PIPELINE = [
@@ -41,15 +41,24 @@ const PIPELINE = [
 export async function runJob(id: string) {
 	jobStore.setStatus(id, 'running');
 
+	const isCancelled = () => jobStore.get(id)?.status === 'cancelled';
+
 	try {
 		for (const step of PIPELINE) {
+			if (isCancelled()) return;
+
 			await sleep(jitter(250));
 			jobStore.log(id, `$ ${step.cmd}`, 'cmd');
+
 			for (const [delay, level, text] of step.lines) {
+				if (isCancelled()) return;
 				await sleep(jitter(delay));
 				jobStore.log(id, text, level);
 			}
 		}
+
+		if (isCancelled()) return;
+
 		await sleep(jitter(300));
 		jobStore.log(id, '✓ Pipeline complete', 'success');
 		jobStore.setStatus(id, 'success');

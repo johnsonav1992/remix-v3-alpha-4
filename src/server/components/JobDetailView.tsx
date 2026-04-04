@@ -1,12 +1,12 @@
-import { renderToStream } from 'remix/component/server';
-import LogViewer from '../../../client/components/LogViewer.tsx';
-import { type JobStatus, jobStore } from '../../jobs/store.ts';
+import LogViewer from '../../client/components/LogViewer.tsx';
+import { type Job, type JobStatus } from '../jobs/store.ts';
 
 const STATUS_COLOR: Record<JobStatus, string> = {
 	queued: '#888',
 	running: '#60a5fa',
 	success: '#4ade80',
 	failed: '#f87171',
+	cancelled: '#555',
 };
 
 const STATUS_LABEL: Record<JobStatus, string> = {
@@ -14,14 +14,11 @@ const STATUS_LABEL: Record<JobStatus, string> = {
 	running: '●  Running',
 	success: '✓  Succeeded',
 	failed: '✗  Failed',
+	cancelled: '⊘  Cancelled',
 };
 
-export function frameJob(req: { params: { id: string } }) {
-	const job = jobStore.get(req.params.id);
-
-	if (!job) return new Response('Not found', { status: 404 });
-
-	const stream = renderToStream(
+export function JobDetailView() {
+	return ({ job }: { job: Job }) => (
 		<div
 			style={{
 				display: 'flex',
@@ -52,9 +49,8 @@ export function frameJob(req: { params: { id: string } }) {
 					{STATUS_LABEL[job.status]}
 				</span>
 			</div>
-			<LogViewer setup={job.id} />
-		</div>,
-	);
 
-	return new Response(stream, { headers: { 'Content-Type': 'text/html' } });
+			<LogViewer setup={job.id} />
+		</div>
+	);
 }

@@ -1,11 +1,15 @@
 import { createRouter } from 'remix/fetch-router';
 import { logger } from 'remix/logger-middleware';
 import { staticFiles } from 'remix/static-middleware';
-import { createJob } from './controllers/createJob.ts';
-import { frameJob } from './controllers/frames/job.tsx';
-import { frameJobs } from './controllers/frames/jobs.tsx';
+
+import { getActivityFeed } from './controllers/activity/getActivityFeed.tsx';
+import { getActivityStream } from './controllers/activity/getActivityStream.ts';
 import { home } from './controllers/home.tsx';
-import { jobStream } from './controllers/jobStream.ts';
+import { cancelJob } from './controllers/jobs/cancelJob.ts';
+import { createJob } from './controllers/jobs/createJob.ts';
+import { getJobDetail } from './controllers/jobs/getJobDetail.tsx';
+import { getJobList } from './controllers/jobs/getJobList.tsx';
+import { getJobStream } from './controllers/jobs/getJobStream.ts';
 import { routes } from './routes.ts';
 
 export function createAppRouter() {
@@ -22,10 +26,15 @@ export function createAppRouter() {
 	});
 
 	router.get(routes.index, home);
-	router.post('/jobs', createJob);
-	router.get(routes.jobs.stream, jobStream);
-	router.get(routes.frames.jobs, frameJobs);
-	router.get(routes.frames.job, frameJob);
+
+	router.get(routes.jobs.list, getJobList);
+	router.post(routes.jobs.list, createJob);
+	router.get(routes.jobs.detail, getJobDetail);
+	router.get(routes.jobs.stream, getJobStream);
+	router.post(routes.jobs.cancel, cancelJob);
+
+	router.get(routes.activity.feed, getActivityFeed);
+	router.get(routes.activity.stream, getActivityStream);
 
 	return router;
 }
