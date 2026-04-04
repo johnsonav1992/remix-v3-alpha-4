@@ -1,8 +1,8 @@
-import { run } from "remix/component";
+import { run } from 'remix/component';
 
 run({
 	loadModule: async (moduleUrl, exportName) => {
-		const mod = await import(/* @vite-ignore */ moduleUrl);
+		const mod = await import(moduleUrl);
 		return mod[exportName];
 	},
 	resolveFrame: async (src, signal) => {

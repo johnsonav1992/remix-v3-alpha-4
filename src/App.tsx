@@ -1,8 +1,6 @@
-import { Frame, css, type Handle } from "remix/component";
-import { Counter } from "./components/Counter.tsx";
-import { ActivityPanel } from "./components/ActivityPanel.tsx";
-
-const IS_DEV = (process.env.NODE_ENV ?? "development") !== "production";
+import { css, Frame, type Handle } from 'remix/component';
+import { ActivityPanel } from './components/ActivityPanel.tsx';
+import { Counter } from './components/Counter.tsx';
 
 // Server-only — renders the full HTML document via renderToStream
 export function App(_handle: Handle) {
@@ -16,19 +14,18 @@ export function App(_handle: Handle) {
 				/>
 				<title>remix v3 — alpha.4</title>
 				<style innerHTML="*, *::before, *::after { box-sizing: border-box; } html, body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: system-ui, -apple-system, sans-serif; background: #0f0f0f; color: #efefef; }" />
-				{IS_DEV && <script type="module" src="/@vite/client" />}
 			</head>
 			<body>
 				<div
 					mix={[
 						css({
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							justifyContent: "center",
-							minHeight: "100vh",
-							gap: "2.5rem",
-							padding: "2rem",
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+							justifyContent: 'center',
+							minHeight: '100vh',
+							gap: '2.5rem',
+							padding: '2rem',
 						}),
 					]}
 				>
@@ -36,10 +33,10 @@ export function App(_handle: Handle) {
 						mix={[
 							css({
 								margin: 0,
-								fontSize: "2.5rem",
+								fontSize: '2.5rem',
 								fontWeight: 700,
-								letterSpacing: "-0.02em",
-								color: "#fff",
+								letterSpacing: '-0.02em',
+								color: '#fff',
 							}),
 						]}
 					>
@@ -57,9 +54,9 @@ export function App(_handle: Handle) {
 									mix={[
 										css({
 											margin: 0,
-											color: "#555",
-											fontSize: "0.875rem",
-											padding: "1rem 0",
+											color: '#555',
+											fontSize: '0.875rem',
+											padding: '1rem 0',
 										}),
 									]}
 								>
@@ -71,8 +68,9 @@ export function App(_handle: Handle) {
 				</div>
 
 				<script
+					async
 					type="module"
-					src="/src/entry.tsx"
+					src="/assets/entry.js"
 				/>
 			</body>
 		</html>
