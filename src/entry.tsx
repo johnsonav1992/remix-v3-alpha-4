@@ -10,3 +10,6 @@ run({
 		return res.body ?? (await res.text());
 	},
 });
+
+export { Counter } from './components/Counter.tsx';
+export { ActivityPanel } from './components/ActivityPanel.tsx';

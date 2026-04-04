@@ -1,7 +1,7 @@
 import { clientEntry, css, type Handle, on } from 'remix/component';
 
 export const Counter = clientEntry(
-	'/assets/components/Counter.js#Counter',
+	'/assets/entry.js#Counter',
 	function Counter(handle: Handle) {
 		let count = 0;
 

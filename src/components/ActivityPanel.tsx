@@ -8,7 +8,7 @@ import {
 } from 'remix/component';
 
 export const ActivityPanel = clientEntry(
-	'/assets/components/ActivityPanel.js#ActivityPanel',
+	'/assets/entry.js#ActivityPanel',
 	function ActivityPanel(handle: Handle) {
 		let reloading = false;
 

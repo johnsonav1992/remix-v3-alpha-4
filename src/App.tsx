@@ -2,7 +2,6 @@ import { css, Frame, type Handle } from 'remix/component';
 import { ActivityPanel } from './components/ActivityPanel.tsx';
 import { Counter } from './components/Counter.tsx';
 
-// Server-only — renders the full HTML document via renderToStream
 export function App(_handle: Handle) {
 	return () => (
 		<html lang="en">
