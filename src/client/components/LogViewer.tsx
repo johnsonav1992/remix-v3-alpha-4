@@ -24,6 +24,8 @@ const LogViewer = (handle: Handle, jobId: string) => {
 			if (data.done) {
 				done = true;
 				source.close();
+				handle.frames.get('job-list')?.reload();
+				handle.frames.get(`job-${jobId}`)?.reload();
 			} else {
 				lines.push(data);
 			}
