@@ -5,7 +5,7 @@ const ActivityPanel = (handle: Handle) => {
 	if (typeof EventSource !== 'undefined') {
 		const source = new EventSource('/events/activity');
 		addEventListeners(source, handle.signal, {
-			message: () => handle.frames.get('activity-feed')?.reload(),
+			message: () => handle.frames.get('job-list')?.reload(),
 		});
 	}
 

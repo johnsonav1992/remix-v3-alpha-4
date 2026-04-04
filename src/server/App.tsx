@@ -96,51 +96,7 @@ export function App(_handle: Handle, selectedJobId?: string) {
 							/>
 						</div>
 
-						<div
-							mix={[
-								css({
-									borderTop: '1px solid #1e1e1e',
-									padding: '0.75rem 0.5rem',
-								}),
-							]}
-						>
-							<span
-								mix={[
-									css({
-										fontSize: '0.65rem',
-										fontWeight: 600,
-										color: '#444',
-										textTransform: 'uppercase',
-										letterSpacing: '0.1em',
-										display: 'block',
-										padding: '0 0.25rem',
-										marginBottom: '0.4rem',
-									}),
-								]}
-							>
-								Activity
-							</span>
-
-							<ActivityPanel />
-
-							<Frame
-								name="activity-feed"
-								src="/activity"
-								fallback={
-									<span
-										mix={[
-											css({
-												fontSize: '0.75rem',
-												color: '#444',
-												padding: '0.25rem',
-											}),
-										]}
-									>
-										Loading…
-									</span>
-								}
-							/>
-						</div>
+						<ActivityPanel />
 					</aside>
 
 					{/* Main */}
