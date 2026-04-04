@@ -1,6 +1,6 @@
 import { css, type Handle } from 'remix/component';
-import { clientComponent } from '../client.ts';
 import type { LogLevel, LogLine } from '../../server/jobs/store.ts';
+import { clientComponent } from '../client.ts';
 
 const LEVEL_COLOR: Record<LogLevel, string> = {
 	cmd: '#60a5fa',

@@ -1,4 +1,4 @@
-import { Frame, css, type Handle } from 'remix/component';
+import { css, Frame, type Handle } from 'remix/component';
 
 export function App(_handle: Handle, selectedJobId?: string) {
 	return () => (

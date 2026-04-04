@@ -39,14 +39,28 @@ function JobRow() {
 					gap: '0.75rem',
 				}}
 			>
-				<span style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#666' }}>
+				<span
+					style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#666' }}
+				>
 					#{job.id}
 				</span>
-				<span style={{ fontSize: '0.75rem', color: STATUS_COLOR[job.status], flex: 1 }}>
+				<span
+					style={{
+						fontSize: '0.75rem',
+						color: STATUS_COLOR[job.status],
+						flex: 1,
+					}}
+				>
 					{STATUS_LABEL[job.status]}
 				</span>
 				{elapsed && (
-					<span style={{ fontSize: '0.75rem', color: '#555', fontFamily: 'monospace' }}>
+					<span
+						style={{
+							fontSize: '0.75rem',
+							color: '#555',
+							fontFamily: 'monospace',
+						}}
+					>
 						{elapsed}
 					</span>
 				)}
@@ -62,11 +76,22 @@ export function frameJobs(req: { url: URL }) {
 	const stream = renderToStream(
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
 			{all.length === 0 ? (
-				<span style={{ fontSize: '0.8rem', color: '#555', padding: '0.5rem 0.75rem' }}>
+				<span
+					style={{
+						fontSize: '0.8rem',
+						color: '#555',
+						padding: '0.5rem 0.75rem',
+					}}
+				>
 					No builds yet
 				</span>
 			) : (
-				all.map((job) => <JobRow job={job} selected={job.id === selectedId} />)
+				all.map((job) => (
+					<JobRow
+						job={job}
+						selected={job.id === selectedId}
+					/>
+				))
 			)}
 		</div>,
 	);
