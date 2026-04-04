@@ -26,7 +26,6 @@ export const App = (_handle: Handle, selectedJobId?: string) => {
 						}),
 					]}
 				>
-					{/* Sidebar */}
 					<aside
 						mix={[
 							css({
@@ -62,10 +61,8 @@ export const App = (_handle: Handle, selectedJobId?: string) => {
 							>
 								Builds
 							</span>
-
 							<RunButton />
 						</div>
-
 						<div
 							mix={[
 								css({
@@ -95,11 +92,8 @@ export const App = (_handle: Handle, selectedJobId?: string) => {
 								}
 							/>
 						</div>
-
 						<ActivityPanel />
 					</aside>
-
-					{/* Main */}
 					<main
 						mix={[
 							css({
@@ -141,7 +135,6 @@ export const App = (_handle: Handle, selectedJobId?: string) => {
 						)}
 					</main>
 				</div>
-
 				<script
 					async
 					type="module"
