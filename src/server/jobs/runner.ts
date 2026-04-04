@@ -1,7 +1,7 @@
 import { jobStore } from './store.ts';
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
-const jitter = (base: number, spread = 0.4) =>
+const jitter = (base: number, spread = 0.2) =>
 	Math.round(base * (1 - spread / 2 + Math.random() * spread));
 
 const PIPELINE = [
